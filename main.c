@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdio.h>
 #include <string.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
@@ -53,17 +52,22 @@ void cliente(){
 		fflush(stdin);
 		fflush(stdout);
 		
-    printf("Entre com o texto a ser convertido:\n");
+    printf("\n>> Entre com o texto a ser convertido:\n");
 		scanf("%[^\n]s",cli_reqmsg.textbuffer);
-		printf("Qual opcao? 1 - Maiuscula; 2 - Minuscula; 9 - Finalizar programa\n");
+		printf("\n>> Qual opcao? \n[1] Maiuscula \n[2] Minuscula \n[9] Finalizar programa\n");
+    printf("Sua opcao: ");
 		scanf("%d",&optconv);
 		scanf("%*c");
+    printf("\n");
+
 
     while(optconv != 1 && optconv != 2 && optconv != 9){
       printf("\n>> Opcao invalida\n\n");
-		  printf("Qual opcao? 1 - Maiuscula; 2 - Minuscula; 9 - Finalizar programa\n");
+		  printf("\n>> Qual opcao? \n[1] Maiuscula \n[2] Minuscula \n[9] Finalizar programa\n");
+      printf("Sua opcao: ");
 		  scanf("%d",&optconv);
 		  scanf("%*c");
+      printf("\n");
     }
 
 		cli_reqmsg.conv_type=TO_UPPERCASE;
@@ -88,7 +92,7 @@ void cliente(){
 			}
 		
     	// Apresenta o texto convertido
-			printf("O texto convertido e':\n");
+			printf(">> O texto convertido e':\n");
 			printf("%s\n",serv_respmsg.textbuffer);
 		}
 	} while(optconv!=9);
