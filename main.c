@@ -7,7 +7,6 @@
 #include <unistd.h>
 
 // Filas de mensagens
-// (RIPPED STRAIGHT FROM TEACHER)
 #define REQ_QUEUE 	10010
 #define RESP_QUEUE 	10020
 
