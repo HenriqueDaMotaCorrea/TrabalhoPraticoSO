@@ -1,12 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <sys/types.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <ctype.h>
 
 // Filas de mensagens
+// (RIPPED STRAIGHT FROM TEACHER)
 #define REQ_QUEUE 	10010
 #define RESP_QUEUE 	10020
 
@@ -14,6 +17,13 @@
 #define TO_LOWERCASE 2
 
 #define MAX_TEXT_SIZE 	1000
+
+int status_login;
+
+struct user {
+  char id[8];
+  char senha[8];
+};
 
 struct reqmsg {
  	long	cli_id;
@@ -99,17 +109,11 @@ void cliente(){
 }
 
 // Threads de comandos
-void *run(/*filename*/){
+void *run(/*filename*/);
 
-}
+void *mail(/*id_usuario, mensagem*/);
 
-void *mail(/*id_usuario, mensagem*/){
-
-}
-
-void *showmail(){
-
-}
+void *showmail();
 
 void *sendmail(mailid,message) {
   char cmd[100];  // to hold the command.
@@ -129,33 +133,21 @@ void *sendmail(mailid,message) {
   return 0;
 }
 
-void *send(/*id_usuario, id_mensagem, texto_mensagem*/){
+void *send(/*id_usuario, id_mensagem, texto_mensagem*/);
 
-}
+void *recieve(/*id_usuario*/);
 
-void *recieve(/*id_usuario*/){
+void *users();
 
-}
+void *myid();
 
-void *users(){
+void *dirlist();
 
-}
+void *godir(/*dir*/);
 
-void *myid(){
-
-}
-
-void *dirlist(){
-
-}
-
-void *godir(/*dir*/){
-
-}
-
-void *exit(){
+// void *exit(){
   
-}
+// }
 
 void stroupper(char * str){
   // Convert string to upper case
@@ -176,6 +168,32 @@ void strolower(char * str){
 // Processo principal e servidor
 int main(void) {
   pid_t pid;
+  status_login = 0;
+
+  struct user u;
+  strcpy(u.id, "aluno123");
+  strcpy(u.senha, "aluno123");
+  
+  do{
+    printf("\n>> Realize seu login primeiro.");
+    printf("\nUsuario: ");
+    char user[8];
+    scanf("%s", user);
+
+    printf("Senha: ");
+    char senha[8];
+    scanf("%s",senha);
+
+    scanf("%*c");
+
+    if(strcmp(user, u.id) == 0 && strcmp(senha, u.senha) == 0)
+      status_login = 1;
+    else
+      printf("\n>> Usuario invalido, tente novamente\n");
+  }while(status_login != 1);
+
+  printf("\n>> Logado com sucesso!\n");
+
   pid = fork();
   if(pid == -1){
     printf("Algo de errado não está certo");
